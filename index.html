@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HeatCheck Web — instant video velo</title>
+<link rel="stylesheet" href="style.css?v=20261010a">
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>⚾ HeatCheck Web</h1>
+    <p>Load game video, mark release + arrival, get pitch velocity. Works offline from a file.</p>
+  </header>
+
+  <section class="panel">
+    <div class="video-head">
+      <span id="video-name">No video loaded</span>
+    </div>
+    <label class="file-btn">📁 Load video
+      <input type="file" id="file-input" accept="video/*">
+    </label>
+    <video id="video" playsinline preload="auto"></video>
+    <div id="video-hint"></div>
+    <div class="transport">
+      <button id="btn-back" title="back one frame">⏮</button>
+      <button id="btn-play" title="play/pause">▶</button>
+      <button id="btn-fwd" title="forward one frame">⏭</button>
+      <span id="time-display">0:00.000</span>
+    </div>
+    <div class="speed-row" id="speed-row">
+      <button data-rate="0.25">0.25×</button>
+      <button data-rate="0.5">0.5×</button>
+      <button data-rate="1" class="active">1×</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="mark-row">
+      <button id="btn-release" class="mark-btn">MARK<br>RELEASE</button>
+      <button id="btn-arrival" class="mark-btn" disabled>MARK<br>ARRIVAL</button>
+      <button id="btn-clear-pending" title="clear pending release">✕</button>
+    </div>
+    <div id="pending"></div>
+    <div id="flash"></div>
+  </section>
+
+  <section class="panel velo-panel">
+    <div class="velo-label">Last pitch</div>
+    <div><span id="velo-big">—</span><span class="velo-unit"> mph</span></div>
+    <div id="velo-detail">No velocity yet.</div>
+    <div class="dist-row">
+      <label for="distance">Release distance</label>
+      <input type="number" id="distance" value="51" min="1" max="200" step="0.5" inputmode="decimal">
+      <span>ft</span>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="list-head">
+      <h2>Pitches</h2>
+      <button id="btn-clear-all">Clear all</button>
+    </div>
+    <div id="stats-line"></div>
+    <div id="pitch-list"></div>
+    <div class="keys">
+      Keys: <kbd>space</kbd> play · <kbd>←</kbd><kbd>→</kbd> frame step ·
+      <kbd>R</kbd> release · <kbd>A</kbd> arrival
+    </div>
+  </section>
+
+  <footer id="build-bar">
+    <a id="build-tag" href="#" title="Tap to load the newest build fresh">build …</a>
+    <button id="btn-refresh" title="Reload this page fresh">↻ Refresh page</button>
+  </footer>
+
+</div>
+<script src="lib.js?v=20261010a"></script>
+<script src="app.js?v=20261010a"></script>
+</body>
+</html>
