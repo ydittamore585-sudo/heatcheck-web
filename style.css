@@ -35,6 +35,19 @@ header p { color: var(--dim); font-size: 13px; margin: 0 0 12px; }
 #video-name { font-size: 13px; color: var(--dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 #video-hint { font-size: 12px; color: var(--dim); margin-top: 6px; min-height: 16px; }
 
+#seek-bar {
+  width: 100%; margin: 10px 0 2px; height: 32px;
+  -webkit-appearance: none; appearance: none; background: transparent; cursor: pointer;
+}
+#seek-bar::-webkit-slider-runnable-track { height: 6px; background: #2b3340; border-radius: 3px; }
+#seek-bar::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--text); margin-top: -8px; border: none;
+}
+#seek-bar::-moz-range-track { height: 6px; background: #2b3340; border-radius: 3px; }
+#seek-bar::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: var(--text); border: none; }
+
 .file-btn {
   display: inline-block; background: #232b37; color: var(--text);
   border: 1px solid var(--line); border-radius: 8px;

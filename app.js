@@ -2,11 +2,12 @@
 'use strict';
 
 (function () {
-  var BUILD = '20261010a';
+  var BUILD = '20261010b';
 
   var state = defaultSession();
   var pendingRelease = null; // video.currentTime at MARK RELEASE tap, or null
   var objectUrl = null;
+  var seekHeld = false; // true while the user is dragging the seek bar
 
   function $(id) { return document.getElementById(id); }
 
@@ -148,6 +149,24 @@
   function updateTimeDisplay() {
     els.timeDisplay.textContent = formatTapTime(currentVideoTime());
     els.playBtn.textContent = video.paused ? '▶' : '⏸';
+    updateSeekBar();
+  }
+
+  function updateSeekBar() {
+    if (seekHeld || !video || !isFinite(video.duration) || video.duration <= 0) return;
+    els.seekBar.value = String(Math.round((video.currentTime / video.duration) * 1000));
+  }
+
+  function onSeekInput() {
+    if (!video.src || !isFinite(video.duration) || video.duration <= 0) return;
+    seekHeld = true;
+    video.pause();
+    video.currentTime = (Number(els.seekBar.value) / 1000) * video.duration;
+  }
+
+  function onSeekEnd() {
+    seekHeld = false;
+    updateSeekBar();
   }
 
   function renderPending() {
@@ -251,6 +270,7 @@
       video: $('video'),
       videoName: $('video-name'),
       videoHint: $('video-hint'),
+      seekBar: $('seek-bar'),
       playBtn: $('btn-play'),
       backBtn: $('btn-back'),
       fwdBtn: $('btn-fwd'),
@@ -277,6 +297,8 @@
     els.playBtn.addEventListener('click', togglePlay);
     els.backBtn.addEventListener('click', function () { frameStep(-1); });
     els.fwdBtn.addEventListener('click', function () { frameStep(1); });
+    els.seekBar.addEventListener('input', onSeekInput);
+    els.seekBar.addEventListener('change', onSeekEnd);
     els.releaseBtn.addEventListener('click', markRelease);
     els.arrivalBtn.addEventListener('click', markArrival);
     els.clearPendingBtn.addEventListener('click', clearPending);
